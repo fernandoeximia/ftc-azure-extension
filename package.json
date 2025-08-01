@@ -1,0 +1,23 @@
+{
+  "name": "ftc-azure-extension",
+  "version": "1.0.0",
+  "description": "Extensão Azure para FTC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fernandoeximia/ftc-azure-extension.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fernandoeximia/ftc-azure-extension/issues"
+  },
+  "homepage": "https://github.com/fernandoeximia/ftc-azure-extension#readme",
+  "dependencies": {
+    "azure-devops-extension-sdk": "^4.0.2"
+  }
+}
