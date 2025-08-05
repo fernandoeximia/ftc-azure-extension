@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+    <script>
+      var globalSDK; // Variável global para o SDK
+
+window.requirejs.config({
+    enforceDefine: true,
+    paths: {
+        'SDK': './lib/SDK.min'
+    }
+});
+
+window.requirejs(['SDK'], function (SDK) {
+    if (typeof SDK !== 'undefined') {
+        console.log("SDK is defined. Trying to initialize...");
+        globalSDK = SDK; // Armazenar globalmente
+        SDK.init();
+        SDK.ready().then(() => {
+            console.log("SDK is ready");
+            initializeWorkItemGroup();
+        });
+    } else {
+        console.log('SDK is not defined');
+    }
+});
+
+function initializeWorkItemGroup() {
+    // Usar a variável global
+    globalSDK.register(globalSDK.getContributionId(), function () {
+        return {
+            onFieldChanged: function(args) {
+                console.log("Campo alterado:", args);
+            },
+            onLoaded: function (args) {
+                console.log("Item de trabalho carregado:", args);
+                enableGenerateButton();
+            },
+            onUnloaded: function (args) {
+                console.log("Item de trabalho descarregado:", args);
+            },
+            onSaved: function (args) {
+                console.log("Item de trabalho salvo:", args);
+            },
+            onReset: function (args) {
+                console.log("Item de trabalho resetado:", args);
+            },
+            onRefreshed: function (args) {
+                console.log("Item de trabalho atualizado:", args);
+            }
+        }
+    });
+}
+        function enableGenerateButton() {
+            const generateButton = document.getElementById('generateUserStoryBtn');
+            if (generateButton) {
+                generateButton.disabled = false;
+                generateButton.textContent = 'Gerar User Story com IA';
+            }
+        }
+
+        function generateUserStory() {
+            const generateButton = document.getElementById('generateUserStoryBtn');
+            const statusDiv = document.getElementById('status');
+            
+            if (generateButton) {
+                generateButton.disabled = true;
+                generateButton.textContent = 'Gerando...';
+            }
+            
+            if (statusDiv) {
+                statusDiv.innerHTML = '<div class="status-message">Gerando User Story com IA...</div>';
+            }
+
+            // Aqui você implementará a lógica de chamada para a IA
+            // Por enquanto, vamos simular uma resposta
+            setTimeout(() => {
+                if (generateButton) {
+                    generateButton.disabled = false;
+                    generateButton.textContent = 'Gerar User Story com IA';
+                }
+                
+                if (statusDiv) {
+                    statusDiv.innerHTML = '<div class="status-message success">User Story gerado com sucesso!</div>';
+                }
+                
+                console.log("Função de geração de User Story chamada");
+            }, 2000);
+        }
+    </script>
+    <style>
+        body {
+            font-family: "Segoe UI VSS (Regular)","-apple-system",BlinkMacSystemFont,"Segoe UI",sans-serif;
+            margin: 0;
+            padding: 16px;
+            background-color: #f8f9fa;
+        }
+
+        .ai-generator-container {
+            background-color: white;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .ai-generator-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #24292e;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .ai-generator-title::before {
+            content: "🤖";
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .generate-button {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+
+        .generate-button:hover:not(:disabled) {
+            background-color: #106ebe;
+        }
+
+        .generate-button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .status {
+            margin-top: 8px;
+        }
+
+        .status-message {
+            font-size: 12px;
+            padding: 8px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            border: 1px solid #e1e4e8;
+            color: #586069;
+        }
+
+        .status-message.success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .description {
+            font-size: 11px;
+            color: #586069;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>        
+    <div class="ai-generator-container">
+        <div class="ai-generator-title">Gerador de User Stories com IA</div>
+        
+        <button id="generateUserStoryBtn" class="generate-button" onclick="generateUserStory()" disabled>
+            Carregando...
+        </button>
+        
+        <div id="status" class="status"></div>
+        
+        <div class="description">
+            Clique no botão acima para gerar automaticamente uma User Story baseada no contexto do projeto atual.
+        </div>
+    </div>
+</body>
+</html> 

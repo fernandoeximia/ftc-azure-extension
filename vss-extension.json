@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "ftc-azure-extension",
     "publisher": "fernandoNeiva",
-    "version": "1.0.0",
+    "version": "1.0.9",
     "name": "ftc-azure-extension",
     "description": "Extensão para criação de user stories com IA",
     "public": false,
@@ -23,11 +23,28 @@
                 "name": "My Hub",
                 "uri": "my-hub.html"
             }
+        },
+        {
+            "id": "ai-user-stories-group",
+            "type": "ms.vss-work-web.work-item-form-group",
+            "description": "Grupo para geração de User Stories com IA",
+            "targets": [
+                "ms.vss-work-web.work-item-form"
+            ],
+            "properties": {
+                "name": "Gerador de User Stories com IA",
+                "uri": "work-item-group.html",
+                "height": 200
+            }
         }
     ],
     "files": [
         {
             "path": "my-hub.html",
+            "addressable": true
+        },
+        {
+            "path": "work-item-group.html",
             "addressable": true
         },
         {
